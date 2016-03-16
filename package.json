@@ -33,7 +33,7 @@
   },
   "directories": {
     "lib": "lib"
-  }
+  },
   "files": [
     "lib/main.js",
     "index.js",
