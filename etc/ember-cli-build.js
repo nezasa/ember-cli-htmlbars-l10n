@@ -117,7 +117,6 @@ module.exports = function(defaults) {
   app.processedTemplatesTreel10n = function(options) {
     var addonTrees = this.addonTreesFor('templates');
     var mergedTrees = this.trees.templates ? addonTrees.concat(this.trees.templates) : addonTrees;
-    var _options = options || {};
     var mergedTemplates = mergeTrees(mergedTrees, {
       overwrite: true,
       annotation: 'TreeMerger (templates)'
@@ -139,15 +138,11 @@ module.exports = function(defaults) {
     var templates = this.addonPreprocessTree('template', mergeTrees([
       standardTemplates,
       podTemplates
-    ], franky.beget(_options, {annotation: 'addonPreprocessTree(template)'})));
-
-    var tmpl = preprocessTemplates(templates, {
-      registry: this.registry,
-      annotation: 'TreeMerger (pod & standard templates)'
-    });
-
-    return this.addonPostprocessTree('template', tmpl);
-  };
+    ], {
+      annotation: 'addonPreprocessTree(template)',
+      localesDir: options.l10n.localesDir,
+      locale: options.locale
+    }));
 
 
 
