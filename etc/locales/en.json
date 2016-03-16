@@ -1,0 +1,6 @@
+{
+  "basewords": {
+    "hello": "Hello",
+    "helloName": "Hello {0} {1}"
+  }
+}
