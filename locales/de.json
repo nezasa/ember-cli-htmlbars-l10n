@@ -1,0 +1,10 @@
+{
+  "base": {
+    "title": "Customizable Trip Ideas DE",
+    "titleParam": "Customizable Trip Ideas for {0}"
+  },
+  "basewords": {
+    "hello": "Hallo",
+    "helloName": "Hallo {0}"
+  }
+}
