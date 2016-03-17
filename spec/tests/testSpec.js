@@ -1,13 +1,8 @@
-var builder;
 describe("ember-cli-htmlbars-l10n", function() {
   var translator = require('../..');
   var Processor = require('../../lib/main');
   var fs = require('fs');
   var path = require('path');
-  //var path = require('path');
-  var broccoli = require('broccoli');
-  var mkdirp = require('mkdirp');
-  ///var builder;
 
   var fixtures = path.join(__dirname, 'fixtures');
 
