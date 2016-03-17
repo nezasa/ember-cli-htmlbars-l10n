@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - 0.10
+npm:
+  - 1.4
+notifications:
+  email: true
