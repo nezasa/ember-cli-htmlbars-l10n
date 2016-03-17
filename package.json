@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-htmlbars-l10n",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "l10n translation layer for htmlbars for ember build",
   "scripts": {
     "test": "npm i && jasmine"
