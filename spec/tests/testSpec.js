@@ -44,7 +44,8 @@ describe("ember-cli-htmlbars-l10n", function() {
     var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
       processorEN = new Processor(tree,translator.getTranslationsByKey("en")),
       processorDE = new Processor(tree,translator.getTranslationsByKey("de")),
-      processorRU = new Processor(tree,translator.getTranslationsByKey("ru"));
+      processorRU = new Processor(tree,translator.getTranslationsByKey("ru")),
+      processorEN2 = new Processor(tree,translator.getTranslationsByKey("en2"));
 
     expect(processorEN.processString(
       "{{t 'basewords.hello'}}"
@@ -57,6 +58,24 @@ describe("ember-cli-htmlbars-l10n", function() {
     expect(processorRU.processString(
       "{{t 'basewords.hello'}}"
     )).toBe("Привет");
+
+    expect(processorEN2.processString(
+      "{{t 'one.two.three.four'}}"
+    )).toBe("oops");
+
+  });
+
+  it("returns empty string if key isn't found in json", function() {
+    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+      processorEN = new Processor(tree,translator.getTranslationsByKey("en"));
+
+    expect(processorEN.processString(
+      "{{t 'basewords.helloNull'}}"
+    )).toBe("");
+
+    expect(processorEN.processString(
+      "{{t 'baseNull'}}"
+    )).toBe("");
 
   });
 
@@ -84,6 +103,22 @@ describe("ember-cli-htmlbars-l10n", function() {
       );
     };
     expect(testFuncEmptyString).toThrowError(TypeError, "path for translation is empty");
+  });
+
+  it('converts named parameters with by indexes', function() {
+    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+        processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
+
+    expect(processorEN.processString(
+      "{{t 'basewords.helloName' name surname }}"
+    )).toBe(
+      "Hello {{name}} {{surname}}"
+    );
+    expect(processorEN.processString(
+      "{{t 'destinations.label.customizableTripIdeas' path.to.variable }}"
+    )).toBe(
+      '<span class=\"count\">{{path.to.variable}}</span> Customizable Trip Ideas'
+    );
   });
 
 });
