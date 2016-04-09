@@ -12,7 +12,7 @@ describe("ember-cli-htmlbars-l10n", function() {
     });
   });
 
- /* it("reads locales folder", function() {
+  it("reads locales folder", function() {
     expect(translator.getTranslationsByKey("en")).toEqual(
       { basewords: { hello: 'Hello', helloName: 'Hello {0} {1}' } }
     );
@@ -121,7 +121,6 @@ describe("ember-cli-htmlbars-l10n", function() {
     );
   });
 
-*/
   it('skips parameters without defined variable', function() {
     var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
       processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
@@ -131,10 +130,10 @@ describe("ember-cli-htmlbars-l10n", function() {
     )).toBe(
       "Hello  "
     );
-    /*expect(processorEN.processString(
+    expect(processorEN.processString(
       "{{t 'destinations.label.customizableTripIdeas'}}"
     )).toBe(
       '<span class=\"count\"></span> Customizable Trip Ideas'
-    );*/
+    );
   });
 });
