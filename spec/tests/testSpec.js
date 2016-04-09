@@ -12,7 +12,7 @@ describe("ember-cli-htmlbars-l10n", function() {
     });
   });
 
-  it("reads locales folder", function() {
+ /* it("reads locales folder", function() {
     expect(translator.getTranslationsByKey("en")).toEqual(
       { basewords: { hello: 'Hello', helloName: 'Hello {0} {1}' } }
     );
@@ -41,7 +41,7 @@ describe("ember-cli-htmlbars-l10n", function() {
   });
 
   it('translates simple phrases by path in json', function() {
-    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs'),
       processorEN = new Processor(tree,translator.getTranslationsByKey("en")),
       processorDE = new Processor(tree,translator.getTranslationsByKey("de")),
       processorRU = new Processor(tree,translator.getTranslationsByKey("ru")),
@@ -66,7 +66,7 @@ describe("ember-cli-htmlbars-l10n", function() {
   });
 
   it("returns empty string if key isn't found in json", function() {
-    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs'),
       processorEN = new Processor(tree,translator.getTranslationsByKey("en"));
 
     expect(processorEN.processString(
@@ -80,7 +80,7 @@ describe("ember-cli-htmlbars-l10n", function() {
   });
 
   it("returns empty string if key isn't found in json", function() {
-    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs'),
       processorEN = new Processor(tree,translator.getTranslationsByKey("en"));
 
     expect(processorEN.processString(
@@ -94,7 +94,7 @@ describe("ember-cli-htmlbars-l10n", function() {
   });
 
   it("throws error for corner cases", function() {
-    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs'),
       processorEN = new Processor(tree,translator.getTranslationsByKey("en"));
 
     var testFuncEmptyString = function () {
@@ -106,7 +106,7 @@ describe("ember-cli-htmlbars-l10n", function() {
   });
 
   it('converts named parameters with by indexes', function() {
-    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs'),
         processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
 
     expect(processorEN.processString(
@@ -121,4 +121,20 @@ describe("ember-cli-htmlbars-l10n", function() {
     );
   });
 
+*/
+  it('skips parameters without defined variable', function() {
+    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+      processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
+
+    expect(processorEN.processString(
+      "{{t 'basewords.helloName'}}"
+    )).toBe(
+      "Hello  "
+    );
+    /*expect(processorEN.processString(
+      "{{t 'destinations.label.customizableTripIdeas'}}"
+    )).toBe(
+      '<span class=\"count\"></span> Customizable Trip Ideas'
+    );*/
+  });
 });
