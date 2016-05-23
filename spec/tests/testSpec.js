@@ -136,4 +136,15 @@ describe("ember-cli-htmlbars-l10n", function() {
       '<span class=\"count\"></span> Customizable Trip Ideas'
     );
   });
+
+  it('returns correct html', function() {
+    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
+      processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
+
+    expect(processorEN.processString(
+      "<h4>{{t 'basewords.hello'}}</h4>{{myvar}}"
+    )).toBe(
+      "<h4>Hello</h4>{{myvar}}"
+    );
+  });
 });
