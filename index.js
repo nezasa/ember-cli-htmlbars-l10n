@@ -1,4 +1,5 @@
 var Translator = require('./lib/main.js'),
+  build = require('./lib/build.js'),
   fs = require("fs"),
   options = {},
   readFile = function (path) {
@@ -51,6 +52,8 @@ module.exports = {
   clear: function () {
     options = {};
   },
+
+  build: build,
 
   config: config,
 
