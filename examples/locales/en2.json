@@ -1,0 +1,19 @@
+{
+  "basewords": {
+    "hello": "Hello",
+    "helloName": "Hello {0} {1}",
+    "2adults": "2 adults"
+  },
+  "one": {
+    "two": {
+      "three": {
+        "four": "oops"
+      }
+    }
+  },
+  "destinations": {
+    "label": {
+      "customizableTripIdeas": "<span class=\"count\">{0}</span> Customizable Trip Ideas"
+    }
+  }
+}

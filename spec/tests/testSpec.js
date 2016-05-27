@@ -7,7 +7,7 @@ describe("ember-cli-htmlbars-l10n", function() {
 
   beforeEach(function() {
     translator.config({
-      localesDir: "spec/fixtures/locales"
+      localesDir: "examples/locales"
     });
     var tree = path.join(__dirname, 'fixtures/templates/!*.hbs');
 
@@ -115,6 +115,16 @@ describe("ember-cli-htmlbars-l10n", function() {
       "Hello {{name}} {{surname}}"
     );
     expect(this.processorEN.processString(
+      "{{concat (t 'basewords.helloName' model.user.name model.user.surname) '!'}}"
+    )).toBe(
+      "{{concat 'Hello' model.user.name model.user.surname '!'}}"
+    );
+    expect(this.processorEN.processString(
+      "{{t 'basewords.helloName' model.user.name model.user.surname}}"
+    )).toBe(
+      "Hello {{model.user.name}} {{model.user.surname}}"
+    );
+    expect(this.processorEN.processString(
       "{{t 'destinations.label.customizableTripIdeas' path.to.variable }}"
     )).toBe(
       '<span class=\"count\">{{path.to.variable}}</span> Customizable Trip Ideas'
@@ -191,7 +201,7 @@ describe("errors", function() {
 
   beforeEach(function() {
     translator.config({
-      localesDir: "spec/fixtures/locales"
+      localesDir: "examples/locales"
     });
     var tree = path.join(__dirname, 'fixtures/templates/!*.hbs');
 
