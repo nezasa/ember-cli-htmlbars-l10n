@@ -31,7 +31,7 @@ module.exports = function( defaults ) {
       // list of required locales 
       locales   : ["en", "de"],
       
-      // folder there your store [your json files with translations
+      // folder with your json files as sources for translations
       localesDir: "examples/locales"
       
     }
@@ -43,7 +43,6 @@ module.exports = function( defaults ) {
 
   return app.toTree();
 };
-=
 ~~~
 
 # Features
