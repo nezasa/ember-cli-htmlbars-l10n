@@ -1,5 +1,7 @@
 {
   "evil": true,
   "node": true,
-  "unused": false
+  "unused": false,
+  "esnext": true,
+  "node": true
 }

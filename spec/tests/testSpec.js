@@ -1,16 +1,15 @@
+/* global describe, expect, require, beforeEach, it, __dirname */
 describe("ember-cli-htmlbars-l10n", function() {
   var translator = require('../..');
   var Processor = require('../../lib/main');
   var fs = require('fs');
   var path = require('path');
 
-  var fixtures = path.join(__dirname, 'fixtures');
-
   beforeEach(function() {
     translator.config({
       localesDir: "spec/fixtures/locales"
     });
-    var tree = path.join(__dirname, 'fixtures/templates/*.hbs');
+    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs');
 
     this.processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
 
@@ -135,6 +134,28 @@ describe("ember-cli-htmlbars-l10n", function() {
     );
   });
 
+  it('can be used as part of expression', function() {
+    expect(this.processorEN.processString(
+      "{{concat (t 'basewords.hello') 'again' (concat 'hello' (t 'basewords.hello'))}}"
+    )).toBe(
+      "{{concat 'Hello' 'again' (concat 'hello' 'Hello')}}"
+    );
+  });
+
+  it('can be used as part of expression with variable', function() {
+    expect(this.processorEN.processString(
+      "{{concat (t 'basewords.hello') 'again'}}"
+    )).toBe(
+      "{{concat 'Hello' 'again'}}"
+    );
+
+    expect(this.processorEN.processString(
+      "{{concat (t 'basewords.hello') 'again' (t 'basewords.helloName' name.in.path)}}"
+    )).toBe(
+      "{{concat 'Hello' 'again' 'Hello' name.in.path }}"
+    );
+  });
+
   it('returns correct html', function() {
     expect(this.processorEN.processString(
       "<h4>{{t 'basewords.hello'}}</h4>{{myvar}}"
@@ -150,6 +171,77 @@ describe("ember-cli-htmlbars-l10n", function() {
       );
     };
     expect(testFuncEmptyString).toThrowError(TypeError);
+  });
+
+});
+
+describe("errors", function() {
+  var translator = require('../..');
+  var Processor = require('../../lib/main');
+  var fs = require('fs');
+  var path = require('path');
+
+  beforeEach(function() {
+    translator.config({
+      localesDir: "spec/fixtures/locales"
+    });
+    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs');
+
+    this.processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
+
+  });
+
+  it("should work in big tempates also", function() {
+    var testFuncEmptyString = `<div class="nz-card bg-indigo" data-episode-title="{{model.module.module.title}}">
+  <div class="row">
+    <div class="col-xs-9">
+      <h3 class="h3">
+        <span class="episode-index hidden-print" title="{{t "basewords.helloName"}}">{{char-by-index index}}</span>
+        <span class="module-label">
+          {{model.exchangeableModuleDesc}} - {{t 'basewords.helloName'}}
+        </span>
+      </h3>
+    </div>
+    <div class="col-xs-3">
+      <a href="#right-menu" class="pull-right btn btn-neutral hidden-print animateScroll" {{action 'focusBaseInfo'}}>
+        <span class="glyphicon glyphicon-chevron-up"></span>
+        {{t 'exploredetail.action.backToOverview'}}
+      </a>
+    </div>
+  </div>
+
+  {{#common/nz-modal modalID=modalId title=model.module.title buttonClose='yes' onStateUpdate=(action (mut modalState))}}
+    {{#if modalShown}}
+      {{#common/nz-modal/body class='nz-description'}}
+        {{common/nz-description/module/content module=activeModule}}
+      {{/common/nz-modal/body}}
+    {{/if}}
+  {{/common/nz-modal}}
+
+  <div class="carousel carousel-module-group slide" id="carousel-{{uniqid}}" data-ride="carousel" data-interval="false">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      {{#each managedModules as |managedModule index|}}
+        {{routes/route-details/stoplist-details/managed/item
+        model=managedModule
+        selectedModule=model.module
+        index=index
+        modalId=modalId
+        showDetails=(action (mut activeModule))
+        active=(if (eq managedModule.id model.module.id) true false)}}
+      {{/each}}
+    </div>
+    <a class="left carousel-control" href="#carousel-{{uniqid}}" role="button" data-slide="prev">
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-{{uniqid}}" role="button" data-slide="next">
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+</div>
+    `;
+    expect(this.processorEN.processString(testFuncEmptyString)).toContain("Hello");
   });
 
 });
