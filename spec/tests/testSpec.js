@@ -10,6 +10,10 @@ describe("ember-cli-htmlbars-l10n", function() {
     translator.config({
       localesDir: "spec/fixtures/locales"
     });
+    var tree = path.join(__dirname, 'fixtures/templates/*.hbs');
+
+    this.processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
+
   });
 
   it("reads locales folder", function() {
@@ -102,19 +106,16 @@ describe("ember-cli-htmlbars-l10n", function() {
         "{{t ''}}"
       );
     };
-    expect(testFuncEmptyString).toThrowError(TypeError, "path for translation is empty");
+    expect(testFuncEmptyString).toThrowError(TypeError);
   });
 
   it('converts named parameters with by indexes', function() {
-    var tree = path.join(__dirname, 'fixtures/templates/!*.hbs'),
-        processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
-
-    expect(processorEN.processString(
+    expect(this.processorEN.processString(
       "{{t 'basewords.helloName' name surname }}"
     )).toBe(
       "Hello {{name}} {{surname}}"
     );
-    expect(processorEN.processString(
+    expect(this.processorEN.processString(
       "{{t 'destinations.label.customizableTripIdeas' path.to.variable }}"
     )).toBe(
       '<span class=\"count\">{{path.to.variable}}</span> Customizable Trip Ideas'
@@ -122,18 +123,35 @@ describe("ember-cli-htmlbars-l10n", function() {
   });
 
   it('skips parameters without defined variable', function() {
-    var tree = path.join(__dirname, 'fixtures/templates/*.hbs'),
-      processorEN = new Processor(tree,translator.getTranslationsByKey("en2"));
-
-    expect(processorEN.processString(
+    expect(this.processorEN.processString(
       "{{t 'basewords.helloName'}}"
     )).toBe(
       "Hello  "
     );
-    expect(processorEN.processString(
+    expect(this.processorEN.processString(
       "{{t 'destinations.label.customizableTripIdeas'}}"
     )).toBe(
       '<span class=\"count\"></span> Customizable Trip Ideas'
     );
   });
+
+  it('returns correct html', function() {
+
+
+    expect(this.processorEN.processString(
+      "<h4>{{t 'basewords.hello'}}</h4>{{myvar}}"
+    )).toBe(
+      "<h4>Hello</h4>{{myvar}}"
+    );
+  });
+
+  it('drops error for incorrect html', function() {
+    var testFuncEmptyString = function () {
+      return this.processorEN.processString(
+        '<li><a href="/preview" onClick="window.location = \'/preview?ref=\' + window.location ; return false ;" title="{{t "preview.label.switchOn"}}" class="preview-link">{{t "preview.label.switchOn"}}</a></li>'
+      );
+    };
+    expect(testFuncEmptyString).toThrowError(TypeError);
+  });
+
 });
