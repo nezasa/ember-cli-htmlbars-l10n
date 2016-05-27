@@ -136,8 +136,6 @@ describe("ember-cli-htmlbars-l10n", function() {
   });
 
   it('returns correct html', function() {
-
-
     expect(this.processorEN.processString(
       "<h4>{{t 'basewords.hello'}}</h4>{{myvar}}"
     )).toBe(
