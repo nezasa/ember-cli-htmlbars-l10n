@@ -5,7 +5,7 @@ This addon introduces localization for [htmlbars templates](https://github.com/t
 It is used as a step during the Ember-CLI build process
 
 # Requirements
-First you need [to have ember-cli installed](https://emberjs.com/)
+First you need [to have ember-cli installed](http://emberjs.com/)
 
 # Installation
 Install the plugin by command `ember install ember-cli-htmlbars-l10n`
