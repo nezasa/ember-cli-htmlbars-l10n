@@ -1,7 +1,8 @@
 {
   "basewords": {
     "hello": "Hello",
-    "helloName": "Hello {0} {1}"
+    "helloName": "Hello {0} {1}",
+    "2adults": "2 adults"
   },
   "one": {
     "two": {

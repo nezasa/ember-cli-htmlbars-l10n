@@ -164,6 +164,14 @@ describe("ember-cli-htmlbars-l10n", function() {
     );
   });
 
+  it('returns correct translation case it starts from decimal', function() {
+    expect(this.processorEN.processString(
+      "<h4>{{t 'basewords.2adults'}}</h4>"
+    )).toBe(
+      "<h4>2 adults</h4>"
+    );
+  });
+
   it('drops error for incorrect html', function() {
     var testFuncEmptyString = function () {
       return this.processorEN.processString(
