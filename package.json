@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-htmlbars-l10n",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "l10n translation layer for htmlbars for ember build",
   "scripts": {
     "test": "npm i && jasmine"
@@ -32,6 +32,7 @@
     "broccoli": "^0.13.3",
     "broccoli-filter": "^1.2.3",
     "broccoli-funnel": "^1.0.1",
+    "broccoli-merge-trees": "^1.1.1",
     "ember-cli-preprocess-registry": "^3.0.0",
     "franky": "^1.0.28"
   },
@@ -56,6 +57,12 @@
     {
       "name": "kondrat",
       "email": "remhag@gmail.com"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/nezasa/ember-cli-htmlbars-l10n/master/LICENSE"
     }
   ],
   "devDependencies": {
