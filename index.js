@@ -1,5 +1,6 @@
 var Translator = require('./lib/main.js'),
-  build = require('./lib/build.js'),
+  buildLegacy = require('./lib/build.js'),
+  buildNext = require('./lib/buildNext.js'),
   fs = require("fs"),
   options = {},
   readFile = function (path) {
@@ -53,7 +54,15 @@ module.exports = {
     options = {};
   },
 
-  build: build,
+  // deprecated
+  build: function(app) {
+    var version = parseInt(app.project.pkg.devDependencies["ember-cli"].split(".").join(""), 10);
+    if (version >= 243) {
+      buildNext(app);
+    } else {
+      buildLegacy(app);
+    }
+  },
 
   config: config,
 
