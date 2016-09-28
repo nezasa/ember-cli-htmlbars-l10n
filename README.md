@@ -98,5 +98,17 @@ app_en.js: <h2>Hello {{model.user.name}} {{model.user.surname}}</h2>
 app_de.js: <h2>Hallo {{model.user.name}} {{model.user.surname}}</h2>
 ~~~
 
+Translation in attributes of html elements
+---------------------------
+If you need to have translation in atrribute of element you should use declaration of ember helper
+~~~
+<h2 title="{{t 'basewords.helloName'}}">test</h2>
+
+will be converted to:
+
+app_en.js: <h2 title="Hello">test</h2>
+app_de.js: <h2 title="Hallo">test</h2>
+~~~
+
 
 
